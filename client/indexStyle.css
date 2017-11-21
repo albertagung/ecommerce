@@ -1,0 +1,106 @@
+* {
+  padding: 0px;
+  margin: 0px
+}
+
+.jumbotron {
+  margin: 0px;
+  height: 100vh
+}
+
+.main-slider .container-fluid {
+  margin: 0px;
+  padding: 0px
+}
+
+.main-slider img {
+  height: 100vh
+}
+
+.main-slider #pic1 {
+  background-color: gray;
+}
+
+.main-slider #pic2 {
+  background-color: blue;
+}
+.main-slider #pic3 {
+  background-color: red;
+}
+
+.main-category .row {
+  margin: 0px;
+}
+
+.main-category .container-fluid {
+  padding-top: 7em;
+  padding-bottom: 7em;
+}
+
+.main-category h4 {
+  text-align: center;
+}
+
+.main-category #cat1 {
+  height: 100vh;
+  background-color: grey
+}
+
+.main-category #cat2 {
+  height: 100vh;
+  background-color: blue
+}
+
+.main-category #cat3 {
+  height: 100vh;
+  background-color: red
+}
+
+.main-category .container-fluid {
+  padding-top: 2em;
+  padding-bottom: 2em
+}
+
+.main-interior h3 {
+  text-align: center
+}
+
+.main-interior .card img {
+  background-color: grey;
+  height: 250px
+}
+
+.main-interior .container {
+  padding-top: 5em;
+}
+
+.main-interior .row {
+  padding-bottom: 3em
+}
+
+.main-interior .card {
+  width: 100%;
+}
+
+/*MODAL*/
+.modal-content {
+  padding: 3em;
+}
+
+#modalProduct img {
+  background-color: grey;
+  width: 1000px;
+  height: 400px
+}
+
+#modalProduct .row {
+  padding-bottom: 2em
+}
+
+#modalCart .table {
+  width: auto;
+}
+
+#modalCart button {
+  width: auto;
+}
