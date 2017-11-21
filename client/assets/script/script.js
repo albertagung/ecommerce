@@ -24,7 +24,7 @@ new Vue({
   data: {
     books: [],
     carts: [],
-    countQty: 0
+    countQty: []
   },
   created () {
     axios.get('http://localhost:3000/libraries').then((response) => {
@@ -42,8 +42,18 @@ new Vue({
       })
     },
     addToCart (data) {
-      console.log(this.countQty);
-      this.carts.push(data)
+      let obj = {
+        'id': data._id,
+        'title': data.title,
+        'qty': 1
+      }
+      this.carts.forEach((dataCarts) => {
+        if(data._id === dataCarts.id){
+          obj.qty++
+        }
+      })
+      this.carts.push(obj)
+      console.log(this.carts);
     }
   }
 })
