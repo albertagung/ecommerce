@@ -23,8 +23,7 @@ new Vue({
   el: '#v',
   data: {
     books: [],
-    carts: [],
-    countQty: []
+    carts: []
   },
   created () {
     axios.get('http://localhost:3000/libraries').then((response) => {
@@ -48,11 +47,21 @@ new Vue({
         'qty': 1
       }
       this.carts.forEach((dataCarts) => {
-        if(data._id === dataCarts.id){
-          obj.qty++
+        if(dataCarts.id === data._id){
+          dataCarts.qty++
         }
       })
-      this.carts.push(obj)
+      if(this.carts.length === 0){
+        this.carts.push(obj)
+      }
+      else{
+        let noMatch = this.carts.findIndex((dataMatch) => {
+          return dataMatch.id === obj.id
+        })
+        if(noMatch === -1){
+          this.carts.push(obj)
+        }
+      }
       console.log(this.carts);
     }
   }
