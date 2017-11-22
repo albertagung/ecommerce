@@ -15,7 +15,8 @@ let customersSchema = new Schema(
       minlength: minLength
     },
     username: String,
-    password: String
+    password: String,
+    role: String
   }
 )
 

@@ -3,6 +3,7 @@ mongoose.connect('mongodb://localhost:27017/mongoose_crud', {
   useMongoClient: true
 });
 let Transaction = require('../models/transactionsModel.js')
+let Book = require('../models/booksModel.js')
 
 // Insert new document into transactions collection
 let insertDataTransactions = function(req,res){
@@ -19,6 +20,7 @@ let insertDataTransactions = function(req,res){
     }
   )
   newTransaction.save().then(function(dataTransactions){
+
     res.send(dataTransactions)
   }).catch(function(err){
     res.status(500).send(err)

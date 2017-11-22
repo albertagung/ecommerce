@@ -16,6 +16,13 @@ $(document).ready(function(){
   })
 })
 
+$(document).ready(function(){
+  $('#registerButton').click(function(){
+    $('#modalLogin').modal('toggle')
+    $('#modalRegister').modal('show')
+  })
+})
+
 
 // Vue
 new Vue({
@@ -38,13 +45,6 @@ new Vue({
     })
   },
   methods: {
-    productModal (title) {
-      this.books.forEach((dataBooks) => {
-        if(dataBooks.title === title){
-          return $('#modalProduct').modal('toggle')
-        }
-      })
-    },
     addToCart (data) {
       let obj = {
         'id': data._id,
@@ -67,6 +67,7 @@ new Vue({
       }
     },
     openModal (param) {
+      parseInt(param.stock)
       this.modalProducts = param
     },
     onSubmit () {
@@ -113,6 +114,21 @@ new Vue({
         console.log('this is post response',response.data);
       }).catch((err) => {
         console.log(err);
+      })
+    },
+    register () {
+      axios.post('http://localhost:3000/customers', {
+        name: $('#registerName').val(),
+        address: $('#registerAddress').val(),
+        zipcode: $('#registerZipcode').val(),
+        phone: $('#registerPhoneNumber').val(),
+        username: $('#registerUsername').val(),
+        password: $('#registerPassword').val(),
+        role: 'customer'
+      }).then((response) => {
+        console.log('this is loginRegister response',response);
+      }).catch((err) => {
+        console.error(err);
       })
     }
   }

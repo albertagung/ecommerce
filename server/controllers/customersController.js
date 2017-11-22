@@ -3,31 +3,35 @@ mongoose.connect('mongodb://localhost:27017/mongoose_crud', {
   useMongoClient: true
 });
 let Customer = require('../models/customersModel.js')
+let crypt = require('../helper/crypt.js')
 
 // Insert new document into customers collection
 let insertDataCustomers = function(req,res){
-  let newCustomer = Customer (
-    {
-      name: req.body.name,
-      memberid: req.body.memberid,
-      address: req.body.address,
-      zipcode: req.body.zipcode,
-      phone: req.body.phone,
-      username: req.body.username,
-      password: req.body.password
-    }
-  )
-  newCustomer.validate(function(err){
-    if(err){
-      res.status(406).send(String(err))
-    }
-    else{
-      newCustomer.save().then(function(dataCustomers){
-        res.send(dataCustomers)
-      }).catch(function(err){
-        res.status(500).send(err)
-      })
-    }
+  crypt(req.body.password).then(function(dataPassword){
+    console.log(dataPassword);
+    let newCustomer = Customer (
+      {
+        name: req.body.name,
+        address: req.body.address,
+        zipcode: req.body.zipcode,
+        phone: req.body.phone,
+        username: req.body.username,
+        password: dataPassword,
+        role: req.body.role
+      }
+    )
+    newCustomer.validate(function(err){
+      if(err){
+        res.status(406).send(String(err))
+      }
+      else{
+        newCustomer.save().then(function(dataCustomers){
+          res.send(dataCustomers)
+        }).catch(function(err){
+          res.status(500).send(err)
+        })
+      }
+    })
   })
 }
 
