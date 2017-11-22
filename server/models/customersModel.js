@@ -13,7 +13,9 @@ let customersSchema = new Schema(
     phone: {
       type: String,
       minlength: minLength
-    }
+    },
+    username: String,
+    password: String
   }
 )
 

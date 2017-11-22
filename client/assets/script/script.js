@@ -12,8 +12,7 @@ $(document).ready(function(){
 
 $(document).ready(function(){
   $('#proceedPayment').click(function(){
-    $('#modalCart').modal('toggle')
-    $('#modalCheckout').modal('toggle')
+    $('#modalCheckout').modal('show')
   })
 })
 
@@ -24,7 +23,12 @@ new Vue({
   data: {
     books: [],
     carts: [],
-    modalProducts: {}
+    histories: [],
+    modalProducts: {},
+    inputQuantity: 0,
+    days: 0,
+    address: '',
+    phoneNumber: ''
   },
   created () {
     axios.get('http://localhost:3000/libraries').then((response) => {
@@ -47,12 +51,6 @@ new Vue({
         'title': data.title,
         'qty': 1
       }
-      this.carts.forEach((dataCarts) => {
-        console.log(obj.qty);
-        if(dataCarts.id === data._id){
-          dataCarts.qty++
-        }
-      })
       if(this.carts.length === 0){
         this.carts.push(obj)
       }
@@ -63,12 +61,59 @@ new Vue({
         if(noMatch === -1){
           this.carts.push(obj)
         }
+        else{
+          this.carts[noMatch].qty++
+        }
       }
-      console.log(this.carts);
     },
     openModal (param) {
       this.modalProducts = param
-      console.log(this.modalProducts)
+    },
+    onSubmit () {
+      alert('Thank You')
+      $('#modalCheckout').modal('toggle')
+      $('#modalCart').modal('toggle')
+    },
+    fromModal (dataModal) {
+      let obj = {
+        'id': dataModal._id,
+        'title': dataModal.title,
+        'qty': parseInt(this.inputQuantity),
+      }
+      if(this.carts.length === 0){
+        this.carts.push(obj)
+      }
+      else{
+        let noMatch = this.carts.findIndex((dataMatch) => {
+          return dataMatch.id === obj.id
+        })
+        if(noMatch === -1){
+          this.carts.push(obj)
+        }
+        else{
+          this.carts[noMatch].qty+=parseInt(this.inputQuantity)
+        }
+      }
+    },
+    postTransactions (dataCheckout) {
+      this.histories = dataCheckout
+      this.carts = []
+      let arrBooks = []
+      this.phoneNumber = $('#contactInput').val()
+      this.address = $('#addressInput').val()
+      this.days = $('#daysInput').val()
+      this.histories.forEach((data) => {
+        arrBooks.push(data.id)
+      })
+      axios.post('http://localhost:3000/transactions', {
+        member: $('#memberInput').val(),
+        days: $('#daysInput').val(),
+        booklist: arrBooks
+      }).then((response) => {
+        console.log('this is post response',response.data);
+      }).catch((err) => {
+        console.log(err);
+      })
     }
   }
 })

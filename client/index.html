@@ -45,9 +45,16 @@
                   <a class="dropdown-item" href="#">Engine</a>
                 </div>
               </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="modal" data-target="#modalCart">View Cart</a>
-              </li>
+              <div v-if="carts.length > 0">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#" data-toggle="modal" data-target="#modalCart">View Cart</a>
+                </li>
+              </div>
+              <div v-if="address !== ''">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#" data-toggle="modal" data-target="#modalHistories" >View Purchase Histories</a>
+                </li>
+              </div>
             </ul>
           </div>
         </nav>
@@ -112,7 +119,7 @@
         </div>
       </div>
 
-      <!-- Modal product 1 -->
+      <!-- Modal product -->
       <div class="modal fade" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
@@ -133,17 +140,13 @@
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil nemo explicabo officia odio, nam eaque nisi magni culpa ipsum asperiores quas, neque minima ad, quos vel soluta facere, praesentium porro rem architecto eius ab eligendi pariatur. Saepe modi adipisci sequi corrupti dolores obcaecati minima inventore, hic maiores, suscipit placeat perferendis.</p>
                 </div>
                 <div class="col-md-6">
-                  <form action="#">
+                  <form action="#" v-on:submit.prevent="onSubmit" >
                     <div class="form-group">
                       <label for="inputQuantity">Input Quantity</label>
-                      <input type="number" class="form-control" name="quantity" placeholder="Input Quantity" value="">
-                    </div>
-                    <div class="form-group">
-                      <label for="extraRequirements">Extra Requirements</label>
-                      <input type="text" class="form-control" name="requirements" placeholder="If any" value="">
+                      <input type="number" class="form-control" name="quantity" placeholder="Input Quantity" v-model="inputQuantity">
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                    <button type="submit" class="btn btn-primary" v-on:click="fromModal(modalProducts)">Add to Cart</button>
                   </form>
                 </div>
               </div>
@@ -173,6 +176,7 @@
                       <tr>
                         <td>{{cart.title}}</td>
                         <td>{{cart.qty}}</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -200,25 +204,45 @@
               </button>
               <div class="row justify-content-md-center">
                 <div class="col-md-12">
-                  <p style="font-weight: bold">Total Payment</p>
-                  <hr>
-                  <p>(price here)</p>
-                  <form action="#">
-                      <p style="font-weight: bold">Input your address details</p>
-                      <hr>
-                      <div class="form-group">
-                        <label for="address">Your address</label>
-                        <input type="text" name="address" class="form-control" id="addressInput" placeholder="Please enter your complete address (including: zipcode, town, region, and country)" value="">
+                  <p style="font-weight: bold">Items Summary</p>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Item Name</th>
+                        <th>Item Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody v-for="cart in carts">
+                      <tr>
+                        <td>{{cart.title}}</td>
+                        <td>{{cart.qty}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <form action="#" v-on:submit.prevent="onSubmit">
+                    <p style="font-weight: bold">Input Details</p>
+                    <hr>
+                    <div class="form-group">
+                      <label for="address">Your Member Id</label>
+                      <input type="text" name="member" class="form-control" id="memberInput" placeholder="Please enter your member ID" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="address">Your address</label>
+                      <input type="text" name="address" class="form-control" id="addressInput" placeholder="Please enter your complete address (including: zipcode, town, region, and country)" value="">
                     </div>
                     <div class="form-group">
                       <label for="contact">Contact person</label>
-                      <input type="number" name="phoneNumber" class="form-control" id="addressInput" placeholder="Please enter your complete phone number" value="">
+                      <input type="number" name="phoneNumber" class="form-control" id="contactInput" placeholder="Please enter your complete phone number" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="contact">Days of borrowing</label>
+                      <input type="number" name="days" class="form-control" id="daysInput" placeholder="Please enter how many days you want to borrow the books" value="">
                     </div>
                     <p style="font-weight: bold">Payment Procedure</p>
                     <hr>
                     <p>Please send your payment to:</p>
                     <p>(Bank name) : (Bank account number)</p>
-                    <button type="submit" class="btn btn-success">Complete Order</button>
+                    <button type="submit" class="btn btn-success" v-on:click="postTransactions(carts)">Complete Order</button>
                   </form>
                 </div>
               </div>
@@ -245,6 +269,52 @@
           <div class="row justify-content-md-center">
             <div class="col col-md-12">
               <p style="text-align: center">Copyright by Albert Agung</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal histories -->
+      <div class="modal fade" id="modalHistories" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="container">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <div class="row justify-content-md-center">
+                <div class="col-md-12">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Item Name</th>
+                        <th>Item Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody v-for="history in histories">
+                      <tr>
+                        <td>{{history.title}}</td>
+                        <td>{{history.qty}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row justify-content-md-center">
+                <div class="col-md-6">
+                  <p style="font-weight: bold">Your shipping address</p>
+                  <hr>
+                  <p>{{address}}</p>
+                  <p style="font-weight: bold">Your contact number</p>
+                  <hr>
+                  <p>{{phoneNumber}}</p>
+                </div>
+                <div class="col-md-6">
+                  <p style="font-weight: bold">Days borrowing</p>
+                  <hr>
+                  <h2 style="font-weight: bold; text-align: center">{{days}}</h4>
+                </div>
+              </div>
             </div>
           </div>
         </div>

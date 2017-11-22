@@ -12,7 +12,9 @@ let insertDataCustomers = function(req,res){
       memberid: req.body.memberid,
       address: req.body.address,
       zipcode: req.body.zipcode,
-      phone: req.body.phone
+      phone: req.body.phone,
+      username: req.body.username,
+      password: req.body.password
     }
   )
   newCustomer.validate(function(err){
