@@ -75,6 +75,14 @@ new Vue({
       $('#modalCheckout').modal('toggle')
       $('#modalCart').modal('toggle')
     },
+    onSubmitRegister () {
+      alert('Thanks for registering!')
+      $('#modalRegister').modal('toggle')
+    },
+    onSubmitLogin () {
+      alert('Thanks for logging in')
+      $('#modalLogin').modal('toggle')
+    },
     fromModal (dataModal) {
       let obj = {
         'id': dataModal._id,
@@ -126,7 +134,17 @@ new Vue({
         password: $('#registerPassword').val(),
         role: 'customer'
       }).then((response) => {
-        console.log('this is loginRegister response',response);
+        console.log('this is register response',response);
+      }).catch((err) => {
+        console.error(err);
+      })
+    },
+    login () {
+      axios.post('http://localhost:3000/login', {
+        username: $('#inputUsername').val(),
+        password: $('#inputPassword').val()
+      }).then((response) => {
+        console.log('this is login response',response);
       }).catch((err) => {
         console.error(err);
       })

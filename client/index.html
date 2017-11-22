@@ -316,7 +316,7 @@
                 <div class="col-md-12">
                   <p style="font-weight: bold">Do not have account? Register now:</p>
                   <hr>
-                  <form v-on:submit.prevent="">
+                  <form v-on:submit.prevent="onSubmitRegister">
                     <div class="form-group">
                       <label for="inputUsername">Username</label>
                       <input type="text" class="form-control" id="registerUsername" aria-describedby="usernameHelp" placeholder="Enter username">
@@ -362,16 +362,16 @@
                 <div class="col-md-12">
                   <p style="font-weight: bold">Have an account? Sign-in now:</p>
                   <hr>
-                  <form v-on:submit.prevent="onSubmit">
+                  <form v-on:submit.prevent="onSubmitLogin">
                     <div class="form-group">
                       <label for="inputUsername">Username</label>
                       <input type="text" class="form-control" id="inputUsername" aria-describedby="usernameHelp" placeholder="Enter username">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
                     </div>
-                    <button type="submit" class="btn btn-success">Log in</button>
+                    <button type="submit" class="btn btn-success" v-on:click="login">Log in</button>
                     <button type="button" class="btn btn-primary" id="registerButton">Register</button>
                   </form>
                 </div>

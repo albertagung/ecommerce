@@ -8,7 +8,8 @@ let compare = require('../helper/compare.js')
 
 // Get token
 let getLogin = function(req,res){
-  User.findOne(
+  console.log('masuk sini');
+  Customer.findOne(
     {
       'username': req.body.username
     },
@@ -34,7 +35,7 @@ let getLogin = function(req,res){
                 }
                 else{
                   req.header.token = token
-                  res.send('Login Succeed!')
+                  res.send(token)
                 }
               }
             )
@@ -62,7 +63,7 @@ let verifyLogin = function(req,res,next){
       }
       else{
         req.isVerified = decoded
-        next()
+        res.send(decoded)
       }
     }
   )
