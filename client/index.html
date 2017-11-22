@@ -98,7 +98,7 @@
                 <div class="card-body">
                   <h4 class="card-title" id="modalTitle">{{book.title}}</h4>
                   <p class="card-text">{{book.author}}</p>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProduct" disabled>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProduct" v-on:click="openModal(book)">
                     View Specifications
                   </button>
                   <button type="button" class="btn btn-primary" name="button" v-on:click="addToCart(book)">Add to Cart</button>
@@ -113,40 +113,38 @@
       </div>
 
       <!-- Modal product 1 -->
-      <div v-for="book in books">
-        <div class="modal fade" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-              <div class="container">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <div class="row justify-content-md-center">
-                  <h4>{{book.title}}</h4>
+      <div class="modal fade" id="modalProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="container">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <div class="row justify-content-md-center">
+                <h4>{{modalProducts.title}}</h4>
+              </div>
+              <div class="row justify-content-md-center">
+                <img src="#" alt="product1">
+              </div>
+              <div class="row justify-content-md-center">
+                <div class="col-md-6">
+                  <p style="font-weight: bold">Specifications</p>
+                  <hr>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil nemo explicabo officia odio, nam eaque nisi magni culpa ipsum asperiores quas, neque minima ad, quos vel soluta facere, praesentium porro rem architecto eius ab eligendi pariatur. Saepe modi adipisci sequi corrupti dolores obcaecati minima inventore, hic maiores, suscipit placeat perferendis.</p>
                 </div>
-                <div class="row justify-content-md-center">
-                  <img src="#" alt="product1">
-                </div>
-                <div class="row justify-content-md-center">
-                  <div class="col-md-6">
-                    <p style="font-weight: bold">Specifications</p>
-                    <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil nemo explicabo officia odio, nam eaque nisi magni culpa ipsum asperiores quas, neque minima ad, quos vel soluta facere, praesentium porro rem architecto eius ab eligendi pariatur. Saepe modi adipisci sequi corrupti dolores obcaecati minima inventore, hic maiores, suscipit placeat perferendis.</p>
-                  </div>
-                  <div class="col-md-6">
-                    <form action="#">
-                      <div class="form-group">
-                        <label for="inputQuantity">Input Quantity</label>
-                        <input type="number" class="form-control" name="quantity" placeholder="Input Quantity" value="">
-                      </div>
-                      <div class="form-group">
-                        <label for="extraRequirements">Extra Requirements</label>
-                        <input type="text" class="form-control" name="requirements" placeholder="If any" value="">
-                      </div>
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                      <button type="submit" class="btn btn-primary">Add to Cart</button>
-                    </form>
-                  </div>
+                <div class="col-md-6">
+                  <form action="#">
+                    <div class="form-group">
+                      <label for="inputQuantity">Input Quantity</label>
+                      <input type="number" class="form-control" name="quantity" placeholder="Input Quantity" value="">
+                    </div>
+                    <div class="form-group">
+                      <label for="extraRequirements">Extra Requirements</label>
+                      <input type="text" class="form-control" name="requirements" placeholder="If any" value="">
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add to Cart</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -177,14 +175,6 @@
                         <td>{{cart.qty}}</td>
                     </tbody>
                   </table>
-                </div>
-              </div>
-              <div class="row justify-content-md-center">
-                <div class="col-md-8">
-                  <p style="font-weight: bold">Total</p>
-                </div>
-                <div class="col-md-4">
-                  <p style="font-weight: bold">IDR 10.000.000</p>
                 </div>
               </div>
               <div class="row justify-content-md-center">

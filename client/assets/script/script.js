@@ -23,7 +23,8 @@ new Vue({
   el: '#v',
   data: {
     books: [],
-    carts: []
+    carts: [],
+    modalProducts: {}
   },
   created () {
     axios.get('http://localhost:3000/libraries').then((response) => {
@@ -47,6 +48,7 @@ new Vue({
         'qty': 1
       }
       this.carts.forEach((dataCarts) => {
+        console.log(obj.qty);
         if(dataCarts.id === data._id){
           dataCarts.qty++
         }
@@ -63,6 +65,10 @@ new Vue({
         }
       }
       console.log(this.carts);
+    },
+    openModal (param) {
+      this.modalProducts = param
+      console.log(this.modalProducts)
     }
   }
 })
