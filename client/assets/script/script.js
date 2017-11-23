@@ -35,7 +35,9 @@ new Vue({
     inputQuantity: 0,
     days: 0,
     address: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    idUser: '',
+    role: ''
   },
   created () {
     axios.get('http://localhost:3000/libraries').then((response) => {
@@ -74,6 +76,10 @@ new Vue({
       alert('Thank You')
       $('#modalCheckout').modal('toggle')
       $('#modalCart').modal('toggle')
+    },
+    onSubmitProduct () {
+      alert('Thank You')
+      $('#modalProduct').modal('toggle')
     },
     onSubmitRegister () {
       alert('Thanks for registering!')
@@ -145,6 +151,8 @@ new Vue({
         password: $('#inputPassword').val()
       }).then((response) => {
         console.log('this is login response',response);
+        this.idUser = response.data.id
+        this.role = response.data.role
       }).catch((err) => {
         console.error(err);
       })

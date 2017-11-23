@@ -5,7 +5,24 @@
 
 .jumbotron {
   margin: 0px;
-  height: 100vh
+  height: 100vh;
+  background-image: url('/assets/img/Library_Books1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.jumbotron h1 {
+  color: white;
+  text-align: center;
+}
+
+.jumbotron p {
+  color: white;
+  text-align: center
+}
+
+.jumbotron button {
+  text-align: center
 }
 
 .main-slider .container-fluid {

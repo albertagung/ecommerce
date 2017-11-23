@@ -7,8 +7,7 @@ let jwt = require('jsonwebtoken')
 let compare = require('../helper/compare.js')
 
 // Get token
-let getLogin = function(req,res){
-  console.log('masuk sini');
+let getLogin = function(req,res,next){
   Customer.findOne(
     {
       'username': req.body.username
@@ -34,8 +33,8 @@ let getLogin = function(req,res){
                   res.status(500).send(err)
                 }
                 else{
-                  req.header.token = token
-                  res.send(token)
+                  req.isLogin = token
+                  next()
                 }
               }
             )
@@ -55,14 +54,14 @@ let getLogin = function(req,res){
 let verifyLogin = function(req,res,next){
   console.log(req.header.token);
   jwt.verify(
-    req.header.token,
+    req.isLogin,
     process.env.SECRET_KEY,
     function(err,decoded){
       if(err){
         res.send(err)
       }
       else{
-        req.isVerified = decoded
+        req.header.decoded = decoded
         res.send(decoded)
       }
     }
