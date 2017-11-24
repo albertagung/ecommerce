@@ -6,6 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -13,6 +14,10 @@ var books = require('./routes/booksRouter.js')
 var customers = require('./routes/customersRouter.js')
 var transactions = require('./routes/transactionsRouter.js')
 var login = require('./routes/loginRouter.js')
+
+mongoose.connect('mongodb://admin:admin@cluster0-shard-00-00-lxcs3.mongodb.net:27017,cluster0-shard-00-01-lxcs3.mongodb.net:27017,cluster0-shard-00-02-lxcs3.mongodb.net:27017/mongoose_crud?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin', {
+  useMongoClient: true
+});
 
 // CORS
 var cors = require('cors')
