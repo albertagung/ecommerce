@@ -40,7 +40,7 @@ new Vue({
     role: ''
   },
   created () {
-    axios.get('http://localhost:3000/libraries').then((response) => {
+    axios.get('http://api.kamu-suka-aku.ga/libraries').then((response) => {
     this.books.push(...response.data)
     }).catch(function(err){
       console.error(err);
@@ -120,7 +120,7 @@ new Vue({
       this.histories.forEach((data) => {
         arrBooks.push(data.id)
       })
-      axios.post('http://localhost:3000/transactions', {
+      axios.post('http://api.kamu-suka-aku.ga/transactions', {
         member: $('#memberInput').val(),
         days: $('#daysInput').val(),
         booklist: arrBooks
@@ -131,7 +131,7 @@ new Vue({
       })
     },
     register () {
-      axios.post('http://localhost:3000/customers', {
+      axios.post('http://api.kamu-suka-aku.ga/customers', {
         name: $('#registerName').val(),
         address: $('#registerAddress').val(),
         zipcode: $('#registerZipcode').val(),
@@ -146,7 +146,7 @@ new Vue({
       })
     },
     login () {
-      axios.post('http://localhost:3000/login', {
+      axios.post('http://api.kamu-suka-aku.ga/login', {
         username: $('#inputUsername').val(),
         password: $('#inputPassword').val()
       }).then((response) => {
